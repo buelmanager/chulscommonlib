@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":app" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":bcom" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
-        <option name="GRADLE_PROJECT_PATH" value=":app" />
+        <option name="GRADLE_PROJECT_PATH" value=":bcom" />
         <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="3.5.3" />
         <option name="LAST_KNOWN_AGP_VERSION" value="3.5.3" />
       </configuration>
@@ -22,6 +22,7 @@
         <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res" />
         <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
+        <option name="PROJECT_TYPE" value="1" />
       </configuration>
     </facet>
     <facet type="kotlin-language" name="Kotlin">
@@ -34,7 +35,7 @@
           <option name="classpath" value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions-runtime/1.3.61/289bdf25b4886749e040c7a7d3aab8a57f85c631/kotlin-android-extensions-runtime-1.3.61.jar:/Users/chulheewon/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.61/70dffc5f8ac5ea7c34f30deac5b9d8b1d48af066/kotlin-stdlib-jdk7-1.3.61.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/aed6d418f40b200af6bc151c5024cda9/core-ktx-1.0.2-api.jar:/Users/chulheewon/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.61/4702105e97f7396ae41b113fdbdc180ec1eb1e36/kotlin-stdlib-1.3.61.jar:/Users/chulheewon/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.61/65abb71d5afb850b68be03987b08e2c864ca3110/kotlin-stdlib-common-1.3.61.jar:/Users/chulheewon/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/4b55673fe660f26bd781865b30fa50bd/appcompat-1.1.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/6aed41555b0bbd45accf50e26a218cb1/fragment-1.1.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/5d65b94f0977397f5d14dd7ff259e148/appcompat-resources-1.1.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/26286edb8ba9b9f7616ab7eb658c4c20/drawerlayout-1.0.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/6711f66fc7c5b2634e0886b5a5fa69e0/viewpager-1.0.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/06bbc4c4b7ac8be943015f26ffd19425/loader-1.0.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/83374fd69ddd72d1b58cc287c84e5725/activity-1.0.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/1cde46d6395a3c06209697ded8d85da9/vectordrawable-animated-1.1.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/0e1a5ba179f2c8be1cabe44381acd704/vectordrawable-1.1.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/514e61e93a3aebb2d380c097068bcb52/customview-1.0.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/2d04cfa651ecc4b29f9ab43b48f6d3de/core-1.1.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/c45ea1df86183084f6d9ecffaf5746c7/cursoradapter-1.0.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/8bce4f161f0e0bb8eebed94484ee9709/versionedparcelable-1.1.0-api.jar:/Users/chulheewon/.gradle/caches/modules-2/files-2.1/androidx.collection/collection/1.1.0/1f27220b47669781457de0d600849a5de0e89909/collection-1.1.0.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/f6356d05ede3fa19d4dc38daca4e147d/lifecycle-viewmodel-2.1.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/994c841479f3a1b7b35999dd6392d4bf/lifecycle-runtime-2.1.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/d1c9b075baa7a143f041a41c2c2b531b/savedstate-1.0.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/918def19c519c59ab5ef9ba8a7d817d3/lifecycle-livedata-2.0.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/5f07ffbeb4727dedd6533e25eaeb0369/lifecycle-livedata-core-2.0.0-api.jar:/Users/chulheewon/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-common/2.1.0/c67e7807d9cd6c329b9d0218b2ec4e505dd340b7/lifecycle-common-2.1.0.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/205e59c43d09c7ec601f0785248932e5/interpolator-1.0.0-api.jar:/Users/chulheewon/.gradle/caches/transforms-2/files-2.1/4f151a4b7baa9d6d7216d55bf539f040/core-runtime-2.0.0-api.jar:/Users/chulheewon/.gradle/caches/modules-2/files-2.1/androidx.arch.core/core-common/2.1.0/b3152fc64428c9354344bd89848ecddc09b6f07e/core-common-2.1.0.jar:/Users/chulheewon/.gradle/caches/modules-2/files-2.1/androidx.annotation/annotation/1.1.0/e3a6fb2f40e3a3842e6b7472628ba4ce416ea4c8/annotation-1.1.0.jar:/Users/chulheewon/Library/Android/sdk/platforms/android-29/android.jar" />
           <option name="noStdlib" value="true" />
           <option name="noReflect" value="true" />
-          <option name="moduleName" value="app_debug" />
+          <option name="moduleName" value="bcom_debug" />
           <option name="languageVersion" value="1.3" />
           <option name="apiVersion" value="1.3" />
           <option name="pluginOptions">
