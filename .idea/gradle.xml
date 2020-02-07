@@ -10,6 +10,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bcom" />
+            <option value="$PROJECT_DIR$/fcm" />
+            <option value="$PROJECT_DIR$/firebase" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

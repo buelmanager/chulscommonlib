@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.buel.bcom" />
+    package="com.buel.bcom" >
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+</manifest>

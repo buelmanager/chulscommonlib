@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bcom/bcom.iml" filepath="$PROJECT_DIR$/bcom/bcom.iml" />
       <module fileurl="file://$PROJECT_DIR$/chulscommonlib.iml" filepath="$PROJECT_DIR$/chulscommonlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fcm/fcm.iml" filepath="$PROJECT_DIR$/fcm/fcm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/firebase/firebase.iml" filepath="$PROJECT_DIR$/firebase/firebase.iml" />
     </modules>
   </component>
 </project>
