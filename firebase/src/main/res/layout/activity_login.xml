@@ -116,31 +116,11 @@
             <TextView
                 android:visibility="gone"
                 android:layout_margin="8dp"
-                android:id="@+id/sign_out"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="sign_out"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                 />
-
-            <TextView
-                android:layout_margin="8dp"
-                android:id="@+id/disconnectButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="logout"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                  />
-
-            <TextView
-                android:visibility="gone"
-                android:layout_margin="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign up for an account?"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                  />
-
 
         </LinearLayout>
 

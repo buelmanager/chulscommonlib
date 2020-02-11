@@ -5,7 +5,6 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-
 object AuthManager {
     val TAG:String = "AUTH_MANAGER"
     val IS_DEBUG:Boolean = false
@@ -17,10 +16,11 @@ object AuthManager {
     var status = ""
     var level = USER_LEVEL.LOW_LEVEL
     var firebaseAuth: FirebaseAuth? = null
+    var token = ""
 
     fun setUser(auth: FirebaseAuth) {
-        Log.e(TAG , "USER SETTING !! ")
-        Log.e(TAG , auth.currentUser.toString())
+        Log.e(TAG , auth.currentUser?.email)
+        Log.e(TAG , auth.currentUser?.displayName)
         firebaseAuth = auth
         firebaseUser = auth.currentUser
     }

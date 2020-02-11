@@ -30,9 +30,11 @@ object FireStoreManager : IFirebase {
     val MAIN_PAGER = "main_pager"
     val CONFIG_DATA = "config_data"
 
+    val USER = "user"
+
     //--------------------------------------------------------------------------------------------
-    const val FIREBASE_TABLE_NAME = "skn"
-    const val PARENT_TABLE_UID = "QZwGf4EJ9Mai1DjJ9lWj"
+    const val FIREBASE_TABLE_NAME = "view1"
+    const val PARENT_TABLE_UID = FIREBASE_TABLE_NAME
 
     private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
     private val collectionReference: DocumentReference = db.collection(FIREBASE_TABLE_NAME).document(PARENT_TABLE_UID)
@@ -85,6 +87,24 @@ object FireStoreManager : IFirebase {
                     onFirestoreComplete.onSuccess(false)
                     error(exception)
                 }
+    }
+
+    /**
+     * 수정은 맵형태로 받는다.
+     */
+    @SuppressLint("LongLogTag")
+    fun modify(collectName: String ,dataModel: java.util.HashMap<String, Any>,
+               onFirestoreComplete: OnSuccessListener<Boolean>) {
+        val map = dataModel
+
+        val userRef = collectionReference.collection(collectName)
+            .document((map["uid"] as String?)!!)
+        userRef.update(map as Map<String, Any>)
+            .addOnCompleteListener { task ->
+                onFirestoreComplete.onSuccess(true)
+            }.addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: ", exception)
+            }
     }
 
     @SuppressLint("LongLogTag")
@@ -167,7 +187,7 @@ object FireStoreManager : IFirebase {
      * @param onCompleteListener
      */
     @SuppressLint("LongLogTag")
-    fun setTimeLineFirestoreDelete(type: String, uid: String, onFirestoreComplete: OnSuccessListener<Boolean>) {
+    fun setFirestoreDelete(type: String, uid: String, onFirestoreComplete: OnSuccessListener<Boolean>) {
 
         try {
             FirebaseStorage.getInstance()
@@ -186,7 +206,10 @@ object FireStoreManager : IFirebase {
         }
     }
 
+
+
     enum class FIRESTORE_TYPE {
         TIME_LINE_POST
     }
+
 }
