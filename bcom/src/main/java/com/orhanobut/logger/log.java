@@ -19,7 +19,7 @@ public class log {
     public static void set(String tag, boolean bool) {
         if (formatStrategy != null) return;
         formatStrategy = PrettyFormatStrategy.newBuilder()
-                .methodCount(3)
+                .methodCount(4)
                 .showThreadInfo(false)      // (Optional) Whether to show thread info or not. Default true
                 .tag(tag)   // (Optional) Global tag for every log. Default PRETTY_LOGGER
                 .build();

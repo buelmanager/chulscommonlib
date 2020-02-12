@@ -1,4 +1,4 @@
-package com.buel.sknmethodist.manager.firebase
+package com.buel.firebase
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -33,11 +33,13 @@ object FireStoreManager : IFirebase {
     val USER = "user"
 
     //--------------------------------------------------------------------------------------------
-    const val FIREBASE_TABLE_NAME = "view1"
-    const val PARENT_TABLE_UID = FIREBASE_TABLE_NAME
+    var FIREBASE_TABLE_NAME = "view1"
+    var PARENT_TABLE_UID = FIREBASE_TABLE_NAME
 
     private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
-    private val collectionReference: DocumentReference = db.collection(FIREBASE_TABLE_NAME).document(PARENT_TABLE_UID)
+    private val collectionReference: DocumentReference = db.collection(FIREBASE_TABLE_NAME).document(
+        PARENT_TABLE_UID
+    )
 
     @SuppressLint("LongLogTag")
     override fun <T> write(collectName: String, dataModel: T, onFirestoreComplete: OnSuccessListener<Boolean>) {

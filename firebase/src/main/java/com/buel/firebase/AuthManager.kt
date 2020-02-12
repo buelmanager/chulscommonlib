@@ -1,7 +1,6 @@
 package com.buel.sknmethodist.manager.firebase
 
 import android.net.Uri
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -19,8 +18,8 @@ object AuthManager {
     var token = ""
 
     fun setUser(auth: FirebaseAuth) {
-        Log.e(TAG , auth.currentUser?.email)
-        Log.e(TAG , auth.currentUser?.displayName)
+        //Log.e(TAG , auth.currentUser?.email)
+        //Log.e(TAG , auth.currentUser?.displayName)
         firebaseAuth = auth
         firebaseUser = auth.currentUser
     }
