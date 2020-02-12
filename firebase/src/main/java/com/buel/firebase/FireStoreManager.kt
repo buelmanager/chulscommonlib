@@ -10,6 +10,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
+import com.orhanobut.logger.log
 import java.io.ByteArrayOutputStream
 
 object FireStoreManager : IFirebase {
@@ -48,7 +49,7 @@ object FireStoreManager : IFirebase {
         collectionReference.collection(collectName).document()
                 .set(dataModel)
                 .addOnSuccessListener {
-                    Log.e(TAG ,"$TAG  [ write > addonsuccesslistener > $collectName ]" +  "addOnSuccessListener !! : $dataModel")
+                    log.e(TAG ,"$TAG  [ write > addonsuccesslistener > $collectName ]" +  "addOnSuccessListener !! : $dataModel")
                     onFirestoreComplete.onSuccess(true)
                 }
                 .addOnFailureListener { exception ->
@@ -65,11 +66,11 @@ object FireStoreManager : IFirebase {
         collectionReference.collection(tableName)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
-                    logStr += " - querySnapshot.size() : ${querySnapshot.size()} \n    │\n    │"
+                    logStr += " - querySnapshot.size() : ${querySnapshot.size()}\n"
                     for (document in querySnapshot) {
-                        logStr += "  ${document.id} => ${document.data} \n    │"
+                        logStr += "  ${document.id} => ${document.data} \n"
                     }
-                    Log.e(TAG," [ READ > ADD_ON_SUCCESS_LISTENER !! > $tableName ]" +  logStr)
+                    log.d("$TAG [ READ > ADD_ON_SUCCESS_LISTENER !! > $tableName ]", logStr)
                     onFirestoreComplete.onSuccess(querySnapshot)
                 }
                 .addOnFailureListener { exception ->
@@ -111,7 +112,7 @@ object FireStoreManager : IFirebase {
 
     @SuppressLint("LongLogTag")
     override fun error(exception: Exception) {
-        Log.e(TAG, exception.message)
+        log.e(TAG, exception.message)
     }
 
     /**
@@ -204,7 +205,7 @@ object FireStoreManager : IFirebase {
                         onFirestoreComplete.onSuccess(false)
                     }
         }catch ( exception:Exception){
-           Log.e(TAG, exception.toString())
+           log.e(TAG, exception.toString())
         }
     }
 

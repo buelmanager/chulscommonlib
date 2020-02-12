@@ -1,7 +1,6 @@
 package com.buel.firebase.login
 
 import android.content.Context
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.buel.firebase.FireStoreManager
 import com.buel.firebase.model.UserModel
@@ -48,7 +47,7 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
         intentlogOut: Boolean,
         onFirestoreComplete: OnSuccessListener<Boolean>
     ) {
-        Log.e(TAG, "setGoogleLogin")
+        log.i(TAG, "setGoogleLogin")
         mAuth = auth
         mContext = context
         mOnLoginComplete = onFirestoreComplete
@@ -92,9 +91,7 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
 
     fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
 
-        log.e(TAG, "firebaseAuthWithGoogle")
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        log.e(TAG, "firebaseAuthWithGoogle mAuth : " + mAuth)
         AuthManager.setUser(mAuth!!)
         AuthManager.token = acct.idToken!!
 
@@ -110,7 +107,6 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
 
     //check user at server
     private fun checkedUserDataAndUpdate() {
-        log.e(TAG, "checkedUserDataAndUpdate")
         val userModels = ArrayList<UserModel>()
         FireStoreManager.read(FireStoreManager.USER, OnSuccessListener {
             val docShots: List<DocumentSnapshot> = it.documents
@@ -119,15 +115,7 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
             for (doc: DocumentSnapshot in docShots) {
                 val usermodel = doc.toObject(UserModel::class.java)
                 userModels.add(usermodel!!)
-
-                log.e ("mAuth!!.currentUser!!.uid) : " + mAuth!!.currentUser!!.uid)
-                log.e ("mAuth!!.currentUser!!.email) : " + mAuth!!.currentUser!!.email)
-
-                log.e ("usermodel.uid) : " + usermodel.uid)
-                log.e ("usermodel.uid) : " + usermodel.userEmail)
-
                 isExist = checkUserDataAndLogin(usermodel, mAuth!!.currentUser!!.uid)
-
                 if (isExist) {
                     mOnLoginComplete?.onSuccess(true)
                     return@OnSuccessListener
@@ -139,14 +127,13 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
     }
 
     fun checkUserDataAndLogin(userModel: UserModel, uid: String?): Boolean {
-        log.e(TAG, "checkUserDataAndLogin")
         userModel.let {
             return uid == userModel.uid
         }
     }
 
     private fun setUserDataOnFireBase() {
-        log.e(TAG, "setUserDataOnFireBase")
+
         val userModel = UserModel()
         if (mAuth == null) return
 
@@ -165,7 +152,7 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
             userModel,
             OnSuccessListener { aBoolean ->
                 if (aBoolean!!) {
-                    log.e(TAG, "FireStoreManager.writ")
+                    log.i(TAG, "FireStoreManager write completeLogin")
                     completeLogin()
                 }
             })
@@ -175,13 +162,13 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
      * startActivityForResult 호출함
      */
     fun signIn() {
-        log.e(TAG, "signIn")
+        log.i(TAG, "signIn")
         val signInIntent = googleSignInClient.signInIntent
         (mContext as AppCompatActivity).startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
     fun signOut(onFirestoreComplete: OnSuccessListener<Boolean>? = null) {
-        log.e(TAG, "signOut")
+        log.i(TAG, "signOut")
         // Firebase sign out
         mAuth?.signOut()
         // Google sign out
@@ -195,7 +182,7 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
     }
 
     fun revokeAccess(onFirestoreComplete: OnSuccessListener<Boolean>? = null) {
-        log.e(TAG, "revokeAccess")
+        log.i(TAG, "revokeAccess")
         // Firebase sign out
         mAuth?.signOut()
         // Google revoke access
@@ -212,7 +199,7 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
     }
 
     private fun completeLogin() {
-        log.e(TAG, "completeLogin")
+        log.i(TAG, "completeLogin")
         AuthManager.setUser(mAuth!!)
         mOnLoginComplete?.onSuccess(true)
     }

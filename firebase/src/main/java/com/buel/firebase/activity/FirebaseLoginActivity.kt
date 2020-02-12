@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.buel.bcom.getPackage
 import com.buel.firebase.R
 import com.buel.firebase.login.FirebaseLogin
 import com.buel.firebase.login.FirebaseLogin.RC_SIGN_IN
@@ -16,7 +15,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.orhanobut.logger.log
 import kotlinx.android.synthetic.main.activity_login.*
 
 class FirebaseLoginActivity : BasePageActivity(),
@@ -34,16 +32,11 @@ class FirebaseLoginActivity : BasePageActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        log.set(this.getPackage(), true)
 
         //google client id : null is return
         default_web_client_id = intent.getStringExtra("default_web_client_id") ?: return
         intentlogOut = intent.extras?.getBoolean("log_out") ?: false
         m_table_name = intent.getStringExtra("table_name") ?: return
-
-        //log.e("default_web_client_id : $default_web_client_id")
-        //log.e("intentlogOut          : $intentlogOut")
-        //log.e("m_table_name          : $m_table_name")
 
         sign_in.setOnClickListener(this)
         initGoogleLogin()
@@ -102,15 +95,11 @@ class FirebaseLoginActivity : BasePageActivity(),
 
     private fun updateUI(user: FirebaseUser?) {
         hideProgressDialog()
-        log.e(TAG, "updateUI user : " + user)
-        //hideProgressDialog()
         if (user != null) {
             AuthManager.setUser(auth!!)
             if (isInvokeLogOut) {
-                //toast("logout")
                 revokeAccess()
             } else {
-                //user.displayName?.let { toast(it + " 님 로그인되었스니다.") }
                 hideProgressDialog()
                 var intent = Intent()
                 intent.putExtra("login", "complete")
