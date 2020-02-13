@@ -152,7 +152,6 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
             userModel,
             OnSuccessListener { aBoolean ->
                 if (aBoolean!!) {
-                    log.i(TAG, "FireStoreManager write completeLogin")
                     completeLogin()
                 }
             })

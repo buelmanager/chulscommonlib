@@ -378,6 +378,9 @@ object Utils {
     }
 }
 
+fun Context.getDrawbleId(name:String):Int{
+    return resources.getIdentifier(name,"drawable",packageName)
+}
 
 fun Context.toast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
@@ -513,3 +516,4 @@ fun Context.getPackage():String
 interface onStatus {
     fun onComplete()
 }
+
