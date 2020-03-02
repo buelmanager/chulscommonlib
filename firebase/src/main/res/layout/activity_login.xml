@@ -6,11 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/main_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
+        android:alpha="0.6"
+        android:background="@color/black"
          />
 
     <LinearLayout
@@ -30,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
-            android:text="@string/app_name"
+            android:text="환영합니다."
             android:textSize="35dp"
             android:textColor="@android:color/white" />
 
@@ -80,7 +85,28 @@
             android:layout_width="0dp"
             android:layout_height="8dp" />
 
+        <EditText
+            android:visibility="gone"
+            android:id="@+id/name_txt"
+            android:textStyle="bold"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:hint="이름을 입력하세요."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:visibility="gone"
+            android:id="@+id/phone_txt"
+            android:textStyle="bold"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:hint="전화번호를 입력하세요."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <RelativeLayout
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
@@ -114,11 +140,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:visibility="gone"
+                android:textColor="@color/white"
                 android:layout_margin="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign up for an account?"
+                android:text="간단한 절차 후 자동으로 로그인됩니다."
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                  />
 

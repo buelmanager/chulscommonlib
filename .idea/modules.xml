@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../IntgViewer/IntgViewer.iml" filepath="$PROJECT_DIR$/../IntgViewer/IntgViewer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../IntgViewer/app/IntgViewer-app.iml" filepath="$PROJECT_DIR$/../IntgViewer/app/IntgViewer-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bcom/bcom.iml" filepath="$PROJECT_DIR$/bcom/bcom.iml" />
       <module fileurl="file://$PROJECT_DIR$/chulscommonlib.iml" filepath="$PROJECT_DIR$/chulscommonlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/chulscommonlib-app.iml" filepath="$PROJECT_DIR$/app/chulscommonlib-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/fcm/fcm.iml" filepath="$PROJECT_DIR$/fcm/fcm.iml" />
       <module fileurl="file://$PROJECT_DIR$/firebase/firebase.iml" filepath="$PROJECT_DIR$/firebase/firebase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intgviewer/intgviewer.iml" filepath="$PROJECT_DIR$/intgviewer/intgviewer.iml" />
     </modules>
   </component>
 </project>

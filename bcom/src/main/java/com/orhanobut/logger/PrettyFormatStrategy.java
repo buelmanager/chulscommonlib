@@ -38,7 +38,7 @@ public class PrettyFormatStrategy implements FormatStrategy {
 
   /**
    * Android's max limit for a log entry is ~4076 bytes,
-   * so 4000 bytes is used as chunk size since default charset
+   * so 4000 bytes is used as chunk size since defaultimg charset
    * is UTF-8
    */
   private static final int CHUNK_SIZE = 4000;
@@ -90,7 +90,7 @@ public class PrettyFormatStrategy implements FormatStrategy {
     logTopBorder(priority, tag);
     logHeaderContent(priority, tag, methodCount);
 
-    //get bytes of message with system's default charset (which is UTF-8 for Android)
+    //get bytes of message with system's defaultimg charset (which is UTF-8 for Android)
     byte[] bytes = message.getBytes();
     int length = bytes.length;
     if (length <= CHUNK_SIZE) {
@@ -106,7 +106,7 @@ public class PrettyFormatStrategy implements FormatStrategy {
     }
     for (int i = 0; i < length; i += CHUNK_SIZE) {
       int count = Math.min(length - i, CHUNK_SIZE);
-      //create a new String with system's default charset (which is UTF-8 for Android)
+      //create a new String with system's defaultimg charset (which is UTF-8 for Android)
       logContent(priority, tag, new String(bytes, i, count));
     }
     logBottomBorder(priority, tag);

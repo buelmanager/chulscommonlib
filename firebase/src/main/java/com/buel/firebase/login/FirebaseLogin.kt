@@ -2,7 +2,7 @@ package com.buel.firebase.login
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import com.buel.firebase.FireStoreManager
+import com.buel.firebase.FsManager
 import com.buel.firebase.model.UserModel
 import com.buel.sknmethodist.manager.firebase.AuthManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -25,6 +25,9 @@ import java.util.*
  */
 object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
     private val TAG: String = "FirebaseLoginActivity"
+    private var mName: String = ""
+    private var mPhone: String = ""
+
     private var mAuth: FirebaseAuth? = null
     private var mContext: Context? = null
     private var firebaseAuth: FirebaseAuth? = null
@@ -43,6 +46,8 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
         tableName: String,
         auth: FirebaseAuth,
         context: Context,
+        name:String,
+        phone:String,
         default_web_client_id: String,
         intentlogOut: Boolean,
         onFirestoreComplete: OnSuccessListener<Boolean>
@@ -50,8 +55,10 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
         log.i(TAG, "setGoogleLogin")
         mAuth = auth
         mContext = context
+        mName = name
+        mPhone = phone
         mOnLoginComplete = onFirestoreComplete
-        FireStoreManager.FIREBASE_TABLE_NAME = tableName
+        FsManager.FIREBASE_TABLE_NAME = tableName
 
         //google sign
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -108,7 +115,7 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
     //check user at server
     private fun checkedUserDataAndUpdate() {
         val userModels = ArrayList<UserModel>()
-        FireStoreManager.read(FireStoreManager.USER, OnSuccessListener {
+        FsManager.read(FsManager.USER, OnSuccessListener {
             val docShots: List<DocumentSnapshot> = it.documents
             var isExist = false
 
@@ -138,17 +145,17 @@ object FirebaseLogin : GoogleApiClient.OnConnectionFailedListener {
         if (mAuth == null) return
 
         val fUser = mAuth?.currentUser!!
-        userModel.userName = fUser.displayName
+        userModel.userName = mName
         userModel.userEmail = fUser.email
-        userModel.userTell = fUser.phoneNumber
+        userModel.userTell = mPhone
         userModel.pushToken = FirebaseInstanceId.getInstance().token
 
         userModel.uid = fUser.uid
         userModel.permission = "no"
         userModel.userPhotoUri = fUser.photoUrl.toString()
 
-        FireStoreManager.write(
-            FireStoreManager.USER,
+        FsManager.write(
+            FsManager.USER,
             userModel,
             OnSuccessListener { aBoolean ->
                 if (aBoolean!!) {

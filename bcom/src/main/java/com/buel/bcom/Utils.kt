@@ -12,6 +12,7 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -22,12 +23,19 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.buel.bcom.interfaces.OnCompleteListener
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.orhanobut.logger.log
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
 import java.net.NetworkInterface
@@ -49,6 +57,19 @@ object Utils {
         target.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(color))
     }
 
+    fun setDataAndTime(context: Context, icon: Int,onCompete:OnCompleteListener<String>) {
+        MaterialDailogUtil.datePickerDialog(
+            context,
+            icon,
+            object : OnCompleteListener<String> {
+                override fun onSuccess(var1: String) {
+                    log.e(var1)
+                    onCompete.onSuccess(var1)
+                }
+            }
+        )
+    }
+
     @SuppressLint("NewApi")
     fun setBackColor(
         context: Context,
@@ -63,7 +84,7 @@ object Utils {
         fabtn: FloatingActionButton,
         color: Int
     ) {
-        fabtn.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(color)))
+        fabtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(color))
     }
 
     fun getRandomMaterialColor(): Int? {
@@ -88,6 +109,7 @@ object Utils {
     fun getRandom(range: Float, startsfrom: Float): Float {
         return (Math.random() * range).toFloat() + startsfrom
     }
+
     var VORDIPLOM_COLORS = intArrayOf(
         Color.rgb(140, 234, 255),
         Color.rgb(255, 140, 157),
@@ -268,9 +290,215 @@ object Utils {
             return ""
         }
 
+
+    fun hideKeyboard(activity: Activity) {
+        val view = getRootView(activity)
+        if (view != null) {
+            val imm =
+                activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    fun gone(vararg views: View) {
+        for (view in views) {
+            view.gone()
+        }
+    }
+
+    fun dpFromPx(context: Context, px: Float): Float {
+        return px / context.getResources().getDisplayMetrics().density
+    }
+
+    fun getSampleRatio(width: Int, height: Int): Float {
+        val targetWidth = 1280
+        val targetHeight = 1280
+
+        val ratio: Float
+
+        if (width > height) {
+            //landscape
+            if (width > targetWidth) {
+                ratio = width.toFloat() / targetWidth.toFloat()
+            } else {
+                ratio = 1f
+            }
+        } else {
+            //portarit
+            if (height > targetHeight) {
+                ratio = height.toFloat() / targetHeight.toFloat()
+            } else {
+                ratio = 1f
+            }
+        }
+        return Math.round(ratio).toFloat()
+    }
+
+    fun setLanguage(context: Context, lang: String) {
+        val locale = Locale(lang)
+        var config = Configuration()
+        config.setLocale(locale)
+        context.resources.updateConfiguration(config, null)
+    }
+
+    fun getTimeStamp(): String {
+        return currentTimestamp()
+    }
+
+    fun getBitmapToImageView(iv: ImageView): Bitmap {
+        return (iv.drawable as BitmapDrawable).bitmap
+    }
+
+    fun simpleOepnPhotoZoomDialog(context: Context, url: String) {
+        val dialogBuilder = AlertDialog.Builder(context)
+
+        val view: View =
+            (context as Activity).layoutInflater.inflate(R.layout.dialog_chrisbanes_photoview, null)
+        val photoView: PhotoView = view.findViewById(R.id.photoImageView)
+
+        val titleTextView = view.findViewById<TextView>(R.id.dialog_photo_title_tv)
+        val descTextView = view.findViewById<TextView>(R.id.dialog_photo_desc_tv)
+        val deleteIv = view.findViewById<ImageView>(R.id.dialog_photo_delete_iv)
+        val backIv = view.findViewById<ImageView>(R.id.dialog_photo_back_iv)
+
+        context.setGlide(photoView, url)
+
+        dialogBuilder.setView(view)
+
+        titleTextView.visibility = View.GONE
+        descTextView.visibility = View.GONE
+        deleteIv.visibility = View.GONE
+
+        val aDialog: AlertDialog = dialogBuilder.create()
+        aDialog.show()
+
+        backIv.setOnClickListener {
+            aDialog.dismiss()
+        }
+    }
+
+    fun oepnPhotoZoomDialog(
+        context: Context,
+        obj: CardTimeLineModel,
+        onSuccessListener: OnCompleteListener<CardTimeLineModel>
+    ) {
+        val dialogBuilder = AlertDialog.Builder(context)
+
+        val view: View =
+            (context as Activity).layoutInflater.inflate(R.layout.dialog_chrisbanes_photoview, null)
+        val photoView: PhotoView = view.findViewById(R.id.photoImageView)
+
+        val titleTextView = view.findViewById<TextView>(R.id.dialog_photo_title_tv)
+        val descTextView = view.findViewById<TextView>(R.id.dialog_photo_desc_tv)
+        val deleteIv = view.findViewById<ImageView>(R.id.dialog_photo_delete_iv)
+        val backIv = view.findViewById<ImageView>(R.id.dialog_photo_back_iv)
+
+        context.setGlide(photoView, obj.content_img!!)
+        dialogBuilder.setView(view)
+        titleTextView.text = obj.title
+        descTextView.text = obj.desc
+        val aDialog: AlertDialog = dialogBuilder.create()
+        aDialog.show()
+
+        backIv.setOnClickListener {
+            aDialog.dismiss()
+        }
+
+        deleteIv.setOnClickListener {
+            obj.clickType = "delete"
+            onSuccessListener.onSuccess(obj)
+        }
+    }
+
+
+    fun simpleOkCancelDialog(
+        context: Context,
+        title: String,
+        msg: String,
+        onClicked: (Boolean) -> Unit
+    ) {
+        log.e("simpleOkCancelDialog")
+        val dialog =
+            AlertDialog.Builder(context)
+        dialog.setTitle(title)
+            .setMessage(msg)
+            .setPositiveButton(
+                "네"
+            ) { dialog, which ->
+                onClicked(true)
+            }
+            .setNegativeButton(
+                "아니요"
+            ) { dialog, which ->
+                onClicked(false)
+                dialog.dismiss()
+            }
+            .create().show()
+    }
+
+    fun simpleOkCancelDialog(
+        context: Context,
+        title: String,
+        msg: String,
+        icon: Int,
+        onClicked: (Boolean) -> Unit
+    ) {
+        log.e("simpleOkCancelDialog")
+        val dialog =
+            AlertDialog.Builder(context)
+        dialog.setTitle(title).setIcon(icon)
+            .setMessage(msg)
+            .setPositiveButton(
+                "네"
+            ) { dialog, which ->
+                onClicked(true)
+            }
+            .setNegativeButton(
+                "아니요"
+            ) { dialog, which ->
+                onClicked(false)
+                dialog.dismiss()
+            }
+            .create().show()
+    }
+
+    fun simpleOkDialog(
+        context: Context,
+        title: String,
+        msg: String,
+        icon: Int,
+        onClicked: (Boolean) -> Unit
+    ) {
+        log.e("simpleOkCancelDialog")
+        val dialog =
+            AlertDialog.Builder(context)
+        dialog.setTitle(title).setIcon(icon)
+            .setMessage(msg)
+            .setPositiveButton(
+                "네"
+            ) { dialog, which ->
+                onClicked(true)
+            }
+            .create().show()
+    }
+
+    fun simpleOkDialog(context: Context, title: String, msg: String, onClicked: (Boolean) -> Unit) {
+        log.e("simpleOkCancelDialog")
+        val dialog =
+            AlertDialog.Builder(context)
+        dialog.setTitle(title)
+            .setMessage(msg)
+            .setPositiveButton(
+                "네"
+            ) { dialog, which ->
+                onClicked(true)
+            }
+            .create().show()
+    }
+
     fun sendDirectCall(
-        pNum: String,
-        context: Activity
+        context: Activity,
+        pNum: String
     ) { // 사용자의 OS 버전이 마시멜로우 이상인지 체크한다.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             /**
@@ -324,62 +552,58 @@ object Utils {
             context.startActivity(intent)
         }
     }
-
-    fun hideKeyboard(activity: Activity) {
-        val view = getRootView(activity)
-        if (view != null) {
-            val imm =
-                activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-    }
-
-    fun gone(vararg views: View) {
-        for (view in views) {
-            view.gone()
-        }
-    }
-
-    fun dpFromPx(context: Context, px: Float): Float {
-        return px / context.getResources().getDisplayMetrics().density
-    }
-
-
-
-    fun getSampleRatio(width: Int, height: Int): Float {
-        val targetWidth = 1280
-        val targetHeight = 1280
-
-        val ratio: Float
-
-        if (width > height) {
-            //landscape
-            if (width > targetWidth) {
-                ratio = width.toFloat() / targetWidth.toFloat()
-            } else {
-                ratio = 1f
-            }
-        } else {
-            //portarit
-            if (height > targetHeight) {
-                ratio = height.toFloat() / targetHeight.toFloat()
-            } else {
-                ratio = 1f
-            }
-        }
-        return Math.round(ratio).toFloat()
-    }
-
-    fun setLanguage( context: Context, lang:String){
-        val locale = Locale(lang)
-        var config = Configuration()
-        config.setLocale(locale)
-        context.resources.updateConfiguration(config, null)
-    }
 }
 
-fun Context.getDrawbleId(name:String):Int{
-    return resources.getIdentifier(name,"drawable",packageName)
+fun Context.setGlide(imageView: ImageView, url: Int) {
+    Glide.with(this).load(url).into((imageView))
+}
+
+fun Context.setGlide(imageView: ImageView, url: String) {
+    Glide.with(this).load(url).into((imageView))
+}
+
+fun Context.setCenterCropGlide(imageView: ImageView, url: Int) {
+
+    var glide = Glide.with(this).load(url)
+    var requestOptions =
+        RequestOptions()
+            .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+    glide.apply(requestOptions).into((imageView))
+}
+
+fun Context.setCenterCropGlide(imageView: ImageView, url: String) {
+    var glide = Glide.with(this).load(url)
+    var requestOptions =
+        RequestOptions()
+            .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+    glide.apply(requestOptions).into((imageView))
+}
+
+fun Context.setfitGlide(imageView: ImageView, url: String) {
+
+    var glide = Glide.with(this).load(url)
+    var requestOptions =
+        RequestOptions()
+            .centerInside()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+    glide.apply(requestOptions).into((imageView))
+}
+
+
+fun Context.setCircleGlide(imageView: ImageView, url: String) {
+
+    var glide = Glide.with(this).load(url)
+    var requestOptions =
+        RequestOptions()
+            .circleCrop()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+    glide.apply(requestOptions).into((imageView))
+}
+
+fun Context.getDrawbleId(name: String): Int {
+    return resources.getIdentifier(name, "drawable", packageName)
 }
 
 fun Context.toast(msg: String) {
@@ -408,8 +632,6 @@ fun View.gone() {
 }
 
 
-
-
 /**
  * 디버깅용
  */
@@ -421,10 +643,10 @@ fun Bundle.printTostring(): String {
     return str
 }
 
-fun Bundle.checkNullParam(vararg params: String?):Boolean {
+fun Bundle.checkNullParam(vararg params: String?): Boolean {
     for (param in params) {
         if (getString(param).isNullOrEmpty()) {
-            Log.e(TAG ,"require invalid >> param : $param is null")
+            Log.e(TAG, "require invalid >> param : $param is null")
             return false
         }
     }
@@ -451,7 +673,11 @@ fun Float.formatF(): String {
 fun androidx.recyclerview.widget.RecyclerView.linearHorizon(pCon: Context) {
     setHasFixedSize(true)
     itemAnimator = null
-    layoutManager = androidx.recyclerview.widget.LinearLayoutManager(pCon, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
+    layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+        pCon,
+        androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,
+        false
+    )
 }
 
 fun androidx.recyclerview.widget.RecyclerView.grid(pCon: Context, spanCount: Int) {
@@ -508,9 +734,28 @@ fun getInteger(str: String): Int? {
     } else Integer.valueOf(tempStr)
 }
 
-fun Context.getPackage():String
-{
+fun Context.getPackage(): String {
     return applicationContext.packageName
+}
+
+fun Context.simpleOkCancelDialog(title: String, msg: String, onClicked: (Boolean) -> Unit) {
+    log.e("simpleOkCancelDialog")
+    val dialog =
+        AlertDialog.Builder(this)
+    dialog.setTitle(title)
+        .setMessage(msg)
+        .setPositiveButton(
+            "네"
+        ) { dialog, which ->
+            onClicked(true)
+        }
+        .setNegativeButton(
+            "아니요"
+        ) { dialog, which ->
+            onClicked(false)
+            dialog.dismiss()
+        }
+        .create().show()
 }
 
 interface onStatus {

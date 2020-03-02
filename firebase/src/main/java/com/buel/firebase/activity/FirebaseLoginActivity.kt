@@ -3,7 +3,9 @@ package com.buel.firebase.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import com.buel.bcom.setCenterCropGlide
 import com.buel.firebase.R
 import com.buel.firebase.login.FirebaseLogin
 import com.buel.firebase.login.FirebaseLogin.RC_SIGN_IN
@@ -17,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 
-class FirebaseLoginActivity : BasePageActivity(),
+class FirebaseLoginActivity : FirebaseBaseActivity(),
     View.OnClickListener {
 
     private val TAG: String = "FirebaseLoginActivity"
@@ -25,6 +27,7 @@ class FirebaseLoginActivity : BasePageActivity(),
     private lateinit var googleSignInClient: GoogleSignInClient
     private var isInvokeLogOut = false
 
+    private var m_login_img_url: String = ""
     private var m_table_name: String = ""
     private var default_web_client_id: String = ""
     private var intentlogOut: Boolean = false
@@ -37,7 +40,15 @@ class FirebaseLoginActivity : BasePageActivity(),
         default_web_client_id = intent.getStringExtra("default_web_client_id") ?: return
         intentlogOut = intent.extras?.getBoolean("log_out") ?: false
         m_table_name = intent.getStringExtra("table_name") ?: return
+        m_login_img_url = intent.getStringExtra("log_img") ?: ""
 
+        Log.e("buel" , "m_login_img_url : " + m_login_img_url)
+        if(m_login_img_url.isNullOrBlank()){
+            setCenterCropGlide(main_img,R.drawable.defaultimg)
+        }else{
+            setCenterCropGlide(main_img,m_login_img_url)
+        }
+        
         sign_in.setOnClickListener(this)
         initGoogleLogin()
     }
@@ -54,6 +65,8 @@ class FirebaseLoginActivity : BasePageActivity(),
             m_table_name,
             auth!!,
             this,
+            name_txt.text.toString(),
+            phone_txt.text.toString(),
             default_web_client_id,
             intentlogOut,
             OnSuccessListener {
@@ -114,6 +127,7 @@ class FirebaseLoginActivity : BasePageActivity(),
 
         when (v.id) {
             R.id.sign_in -> {
+
                 showProgressDialog()
                 FirebaseLogin.signIn()
             }

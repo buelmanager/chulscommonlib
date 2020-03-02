@@ -1,2 +1,2 @@
-include ':app', ':bcom', ':fcm', ':firebase'
+include ':app', ':bcom', ':fcm', ':firebase', ':intgviewer'
 rootProject.name='chulsCommonLib'
