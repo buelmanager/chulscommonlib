@@ -48,7 +48,7 @@ class FirebaseLoginActivity : FirebaseBaseActivity(),
         }else{
             setCenterCropGlide(main_img,m_login_img_url)
         }
-        
+
         sign_in.setOnClickListener(this)
         initGoogleLogin()
     }

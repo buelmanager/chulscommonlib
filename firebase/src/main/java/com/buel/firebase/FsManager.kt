@@ -17,10 +17,11 @@ object FsManager : IFirebase {
 
     //release :: EC:ED:6B:4F:C2:7C:D8:ED:BC:48:25:03:B3:F3:B5:B2:7C:18:F6:4A
     //--------------------------------------------------------------------------------------------
-    val TAG = "FIREBASE_FIRESTOREMANAGER"
+    val TAG = "FIREBASE_FsManager"
     val ADMIN = "admin"
     val INFO = "info_page"
     val MAIN_PAGER = "main_pager"
+    val APPS = "apps"
     val CONFIG_DATA = "config_data"
     val BOOKER = "booker"
 
@@ -101,9 +102,6 @@ object FsManager : IFirebase {
         var docRef: DocumentReference =
             if (isCommon) comCollectRef else collectRef
 
-        log.d("$TAG [ READ > READ_REQUEST !! > docRef ]", docRef.path)
-
-
         docRef.collection(tableName)
             .get()
             .addOnSuccessListener { querySnapshot ->
@@ -111,11 +109,10 @@ object FsManager : IFirebase {
                 for (document in querySnapshot) {
                     logStr += "  ${document.id} => ${document.data} \n"
                 }
-                log.d("$TAG [ READ > ADD_ON_SUCCESS_LISTENER !! > $tableName ]", logStr)
+                log.d("$TAG [ READ > ADD_ON_SUCCESS_LISTENER !! > ${docRef.path + "/" + tableName} ]", logStr)
                 onFirestoreComplete.onSuccess(querySnapshot)
             }
             .addOnFailureListener { exception ->
-                //onFirestoreComplete.onSuccess(null)
                 error(exception)
             }
     }

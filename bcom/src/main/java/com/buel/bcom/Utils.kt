@@ -215,6 +215,7 @@ object Utils {
         adapter: FragmentPagerAdapter
     ): Fragment? {
         try {
+
             val m = adapter
                 .javaClass
                 .superclass
@@ -225,14 +226,23 @@ object Utils {
             val f = adapter.javaClass.superclass
                 ?.getDeclaredField("mFragmentManager")
             f?.isAccessible = true
+
             val fm =
                 f?.get(adapter) as FragmentManager
             m?.isAccessible = true
+
             var tag: String? = null
             tag = m?.invoke(
                 null, pager.id,
                 pager.currentItem.toLong()
             ) as String
+
+
+            log.e("getCurrentFragment fm : " + fm)
+            log.e("getCurrentFragment pager.id : " + pager.id)
+            log.e("getCurrentFragment pager.currentItem.toLong() : " + pager.currentItem.toLong())
+            log.e("getCurrentFragment tag : " + tag)
+            log.e("getCurrentFragment fm.findFragmentByTag(tag) " + fm.findFragmentByTag(tag))
             return fm.findFragmentByTag(tag)
         } catch (e: NoSuchMethodException) {
             e.printStackTrace()
@@ -245,9 +255,52 @@ object Utils {
         } catch (e: NoSuchFieldException) {
             e.printStackTrace()
         }
+        log.e("getCurrentFragment 5 ")
         return null
     }
 
+    fun getCurrentFragmentNum(
+        pager: ViewPager,
+        adapter: FragmentPagerAdapter
+    ): Int? {
+        try {
+
+            val m = adapter
+                .javaClass
+                .superclass
+                ?.getDeclaredMethod(
+                    "makeFragmentName", Int::class.javaPrimitiveType,
+                    Long::class.javaPrimitiveType
+                )
+            val f = adapter.javaClass.superclass
+                ?.getDeclaredField("mFragmentManager")
+            f?.isAccessible = true
+
+            val fm =
+                f?.get(adapter) as FragmentManager
+            m?.isAccessible = true
+
+            var tag: String? = null
+            tag = m?.invoke(
+                null, pager.id,
+                pager.currentItem.toLong()
+            ) as String
+
+            return pager.currentItem
+        } catch (e: NoSuchMethodException) {
+            e.printStackTrace()
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        } catch (e: IllegalAccessException) {
+            e.printStackTrace()
+        } catch (e: InvocationTargetException) {
+            e.printStackTrace()
+        } catch (e: NoSuchFieldException) {
+            e.printStackTrace()
+        }
+        log.e("getCurrentFragment 5 ")
+        return null
+    }
     @Throws(IOException::class)
     fun getBitmapFromUri(context: Context, uri: Uri?): Bitmap {
         val parcelFileDescriptor =
@@ -577,6 +630,16 @@ fun Context.setCenterCropGlide(imageView: ImageView, url: String) {
     var requestOptions =
         RequestOptions()
             .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+    glide.apply(requestOptions).into((imageView))
+}
+
+fun Context.setfitGlide(imageView: ImageView, url: Int) {
+
+    var glide = Glide.with(this).load(url)
+    var requestOptions =
+        RequestOptions()
+            .centerInside()
             .diskCacheStrategy(DiskCacheStrategy.NONE)
     glide.apply(requestOptions).into((imageView))
 }
